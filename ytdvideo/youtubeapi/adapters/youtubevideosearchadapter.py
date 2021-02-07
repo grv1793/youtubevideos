@@ -17,6 +17,8 @@ class YoutubeVideoSearchAdapter(object):
         if not api_key:
             raise exceptions.NotFound("Active API Key Not Found")
 
+        return api_key
+
     def youtube_search(self, search_term, max_results=100):
         api_key = None
         try:
