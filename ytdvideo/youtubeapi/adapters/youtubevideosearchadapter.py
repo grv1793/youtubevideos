@@ -48,7 +48,7 @@ class YoutubeVideoSearchAdapter(object):
             return videos
         except:
             print(traceback.format_exc())
-            pass
+            return []
 
     def format_thumbnails_data(self, data={}):
         formatted_data = []
