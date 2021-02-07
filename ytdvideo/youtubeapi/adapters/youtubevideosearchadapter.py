@@ -42,7 +42,7 @@ class YoutubeVideoSearchAdapter(object):
                 {
                     "title": search_result['snippet']['title'],
                     "description": search_result['snippet']['publishedAt'],
-                    "id": search_result['id']['videoId'],
+                    "video_id": search_result['id']['videoId'],
                     "published_at": search_result['snippet']['publishedAt'],
                     "thumbnails": thumbnails_data,
                 }

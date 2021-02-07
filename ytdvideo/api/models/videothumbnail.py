@@ -14,12 +14,6 @@ class VideoThumbnail(TimeStampedModel):
         (HIGH, HIGH, "HIGH TYPE"),
     )
 
-    video = models.ForeignKey(
-        "api.video",
-        on_delete=models.CASCADE,
-        related_name="get_thumbnails"
-    )
-
     width = models.IntegerField("Width of Thumbnail")
     height = models.IntegerField("Height of Thumbnail")
     url = models.URLField(max_length=500)

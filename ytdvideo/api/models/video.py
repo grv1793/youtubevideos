@@ -8,3 +8,8 @@ class Video(TimeStampedModel):
     title = models.TextField(null=True, blank=True)
     description = models.TextField(null=True, blank=True)
     published_at = models.DateTimeField(db_index=True)
+    thumbnails = models.ManyToManyField(
+        'api.VideoThumbnail',
+        related_name="videos",
+        default=None
+    )
