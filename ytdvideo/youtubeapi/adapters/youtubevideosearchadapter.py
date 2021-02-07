@@ -14,6 +14,8 @@ class YoutubeVideoSearchAdapter(object):
     YOUTUBE_API_VERSION = 'v3'
 
     def get_developer_api_key(self):
+        # TODO use new key only when previous key expires
+        # check response of api if key quota is reached and then fetch new api key
         return random.choice(self.DEVELOPER_KEYS)
 
     def youtube_search(self, search_term, max_results=10):
@@ -41,6 +43,7 @@ class YoutubeVideoSearchAdapter(object):
                     "description": search_result['snippet']['publishedAt'],
                     "id": search_result['id']['videoId'],
                     "published_at": search_result['snippet']['publishedAt'],
+                    "thumbnails": search_result['snippet']['thumbnails'],
                 }
             )
 
