@@ -1,0 +1,1 @@
+YTD_SEARCH_QUERY_TERMS = ["cricket", "rihanna", "farmer"]
