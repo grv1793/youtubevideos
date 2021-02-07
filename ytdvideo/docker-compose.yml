@@ -72,8 +72,15 @@ services:
       - '3000:3000'
     expose:
       - 3000
-    env_file:
-      - ./.env
+    environment:
+      - DB_NAME=youtubevideos
+      - DB_USER=postgres
+      - DB_PASSWORD=postgres
+      - DB_HOST=postgres
+      - DB_PORT=5432
+      - ELASTICSEARCH_HOST=elasticsearch
+      - ELASTICSEARCH_PORT=9200
+      - REDIS_SERVER=redis
     networks:
       - default
     depends_on:
@@ -90,6 +97,15 @@ services:
       - ./.env
     networks:
       - default
+    environment:
+      - DB_NAME=youtubevideos
+      - DB_USER=postgres
+      - DB_PASSWORD=postgres
+      - DB_HOST=postgres
+      - DB_PORT=5432
+      - ELASTICSEARCH_HOST=elasticsearch
+      - ELASTICSEARCH_PORT=9200
+      - REDIS_SERVER=redis
     depends_on:
       - kibana
       - redis
