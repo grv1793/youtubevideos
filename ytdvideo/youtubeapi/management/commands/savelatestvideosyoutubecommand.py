@@ -17,6 +17,7 @@ class Command(BaseCommand):
         while True:
             if self.COUNT > self.MAX_API_CALL_LIMIT:
                 print("MAX_API_CALL_LIMIT Reached: {}".format(self.COUNT))
+                time.sleep(self.FETCH_VIDEOS_FREQUENCY_IN_SECS)
                 continue
 
             self.COUNT += 1
