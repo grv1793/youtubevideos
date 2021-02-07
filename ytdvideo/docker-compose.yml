@@ -64,6 +64,24 @@ services:
     depends_on:
       - elasticsearch
 
+  api:
+    build: .
+    restart: always
+    command: bash -c "python3 manage.py runserver 0.0.0.0:3000"
+    ports:
+      - '3000:3000'
+    expose:
+      - 3000
+    env_file:
+      - ./.env
+    networks:
+      - default
+    depends_on:
+      - kibana
+      - redis
+      - postgres
+      - elasticsearch
+
   save_latest_video_content_command:
     build: .
     restart: always
@@ -77,6 +95,7 @@ services:
       - redis
       - postgres
       - elasticsearch
+      - api
 
 volumes:
   redis_data:

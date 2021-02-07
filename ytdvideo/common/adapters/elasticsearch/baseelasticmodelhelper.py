@@ -56,7 +56,7 @@ class BaseElasticModelHelper(object):
             if term_list_length > 1:
                 boost = max_boost
                 for i in range(term_list_length):
-                    boost = boost - boost_diff;
+                    boost = boost - boost_diff
                     if boost > lowest_boost:
                         should_query.append({
                             "wildcard": {
