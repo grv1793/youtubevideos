@@ -1,5 +1,5 @@
 import random
-
+import traceback
 from googleapiclient.discovery import build
 
 
@@ -16,35 +16,39 @@ class YoutubeVideoSearchAdapter(object):
         return random.choice(self.DEVELOPER_KEYS)
 
     def youtube_search(self, search_term, max_results=100):
-        youtube = build(
-            self.YOUTUBE_API_SERVICE_NAME,
-            self.YOUTUBE_API_VERSION,
-            developerKey=self.get_developer_api_key()
-        )
-
-        search_response = youtube.search().list(
-            q=search_term,
-            part='id,snippet',
-            maxResults=max_results,
-            type="video",
-            order="date",
-            publishedAfter="2021-02-01T00:00:00Z",
-        ).execute()
-
-        videos = []
-        for search_result in search_response.get('items', []):
-            thumbnails_data = self.format_thumbnails_data(search_result['snippet']['thumbnails'])
-            videos.append(
-                {
-                    "title": search_result['snippet']['title'],
-                    "description": search_result['snippet']['description'],
-                    "video_id": search_result['id']['videoId'],
-                    "published_at": search_result['snippet']['publishedAt'],
-                    "thumbnails": thumbnails_data,
-                }
+        try:
+            youtube = build(
+                self.YOUTUBE_API_SERVICE_NAME,
+                self.YOUTUBE_API_VERSION,
+                developerKey=self.get_developer_api_key()
             )
 
-        return videos
+            search_response = youtube.search().list(
+                q=search_term,
+                part='id,snippet',
+                maxResults=max_results,
+                type="video",
+                order="date",
+                publishedAfter="2021-02-01T00:00:00Z",
+            ).execute()
+
+            videos = []
+            for search_result in search_response.get('items', []):
+                thumbnails_data = self.format_thumbnails_data(search_result['snippet']['thumbnails'])
+                videos.append(
+                    {
+                        "title": search_result['snippet']['title'],
+                        "description": search_result['snippet']['description'],
+                        "video_id": search_result['id']['videoId'],
+                        "published_at": search_result['snippet']['publishedAt'],
+                        "thumbnails": thumbnails_data,
+                    }
+                )
+
+            return videos
+        except:
+            print(traceback.format_exc())
+            pass
 
     def format_thumbnails_data(self, data={}):
         formatted_data = []
