@@ -39,7 +39,29 @@ you will see dashboard for videos or go to http://127.0.0.1:3000/portal/api/vide
 you can configure the Youtube API keys here:
 http://127.0.0.1:3000/portal/youtubeapi/youtubevideoapikey/
 
-Adding/Deletion of api keys can be in runtime
+Adding/Deletion of api keys can be done in runtime
+some of the PI Keys that can be used are: 
+1. AIzaSyAv5hny1k5pP59AhnyePiANcAhAImOuiiU
+2. AIzaSyBDBKr6k0acy5RfoyAXhKf1gWikeZQOfUw
+3. AIzaSyDUzlTQ-ZkNxSrOTpWqhUfACANuJ8G77n8
+4. AIzaSyB-lY-psYHDqny-UhnlT4QyaP5HLMhEX3U
+
+You will see that API keys will be automatically set to InActive in portal
+~~~
+
+~~~
+Save youtube videos after every 10 seconds
+
+you can see the logs using this command:
+-> docker-compose logs --tail="all" -f save_latest_video_content_command
+
+Implementation:
+1. added management command to execute this
+2. management command executed in docker container
+3. Check file youtubevideos/ytdvideo/youtubeapi/management/commands/savelatestvideosyoutubecommand.py
+4. Fetches videos data from youtube apis
+5. saves data in Video and VideoThumnail tables of postgres
+6. The data is saved in ElasticSearch as well
 ~~~
 
 ~~~
@@ -49,18 +71,6 @@ check this file in repository:
 youtubevideos/ytdvideo/youtubevideos.postman_collection.json
 
 Go to postman and import postman collection using this file.
-~~~
-
-~~~
-Save youtube videos after every 10 seconds
-
-Implementation:
-1. added management command to execute this
-2. management command executed in docker container
-3. Check file youtubevideos/ytdvideo/youtubeapi/management/commands/savelatestvideosyoutubecommand.py
-4. Fetches videos data from youtube apis
-5. saves data in Video and VideoThumnail tables of postgres
-6. The data is saved in ElasticSearch as well
 ~~~
 
 ~~~
