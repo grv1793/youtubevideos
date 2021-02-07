@@ -21,6 +21,7 @@ class YoutubeVideoSearchAdapter(object):
         api_key = None
         try:
             api_key = self.get_developer_api_key()
+            print("using api key {}".format(api_key))
             youtube = build(
                 self.YOUTUBE_API_SERVICE_NAME,
                 self.YOUTUBE_API_VERSION,
