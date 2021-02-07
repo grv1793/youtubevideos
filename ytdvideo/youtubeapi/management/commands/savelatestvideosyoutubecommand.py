@@ -11,9 +11,14 @@ class Command(BaseCommand):
     """
     COUNT = 0
     FETCH_VIDEOS_FREQUENCY_IN_SECS = 10
+    MAX_API_CALL_LIMIT = 2
 
     def handle(self, *args, **kwargs):
         while True:
+            if self.COUNT > self.MAX_API_CALL_LIMIT:
+                print("MAX_API_CALL_LIMIT Reached: {}".format(self.COUNT))
+                continue
+
             self.COUNT += 1
             self.save_latest_videos()
             time.sleep(self.FETCH_VIDEOS_FREQUENCY_IN_SECS)
