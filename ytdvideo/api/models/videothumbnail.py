@@ -26,5 +26,6 @@ class VideoThumbnail(TimeStampedModel):
 
     type = models.CharField(
         choices=TYPE_CHOICES,
+        max_length=50,
         db_index=True
     )
