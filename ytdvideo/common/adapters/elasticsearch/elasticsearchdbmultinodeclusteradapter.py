@@ -7,7 +7,7 @@ from elasticsearch import Elasticsearch, ElasticsearchException, ImproperlyConfi
 
 from common.adapters.utils.singleton import Singleton
 
-logger = logging.getLogger("wi.event.log")
+logger = logging.getLogger("es.log")
 
 
 @Singleton

@@ -15,7 +15,7 @@ class BaseElasticModelHelper(object):
 
     def push_obj_to_es(self, obj):
         data = self.model_helper.get_obj_data(obj)
-        self.es_model(content=data).save()
+        self.es_model().save(content=data)
 
     def filter(self, query, pagination_config=None, sort_params=None, paginate=True):
         if not pagination_config:
@@ -34,11 +34,6 @@ class BaseElasticModelHelper(object):
             return paginated_candidate.fetch()
 
         return self.es_model().query(query_param=query, sort_params=sort_params, **pagination_config)
-
-    @staticmethod
-    def parse_es_result(data):
-        # to be overridden in the child class
-        return data
 
     @staticmethod
     def get_widcard_and_fuzzy_query(fields, search_term, max_boost=100, boost_diff=20, lowest_boost=50):
@@ -168,8 +163,3 @@ class BaseElasticModelHelper(object):
         aggs = {aggs_key: {"sum": {"field": field}}}
         data = self.es_model().aggregate(aggs, query_param=query_param)
         return data['aggregations'][aggs_key]['value']
-
-    def bulk_delete(self, doc_ids):
-        # TODO add bulk delete in elastic model
-        for doc_id in doc_ids:
-            self.es_model().delete(doc_id)

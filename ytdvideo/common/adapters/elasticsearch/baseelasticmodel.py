@@ -6,16 +6,15 @@ class BaseElasticModel(object):
     doc_type = None
     db_config_name = None
     adapter_class = None
-    index_body = None
 
     @classmethod
-    def create_collection(cls):
+    def create_collection(cls, index_body):
         """
         One time setup to create the required collection with required mappings...
         """
         index_create_params = {
             'index': cls.collection,
-            'body': cls.index_body,
+            'body': index_body,
         }
         for _session in cls.sessions:
             _session.indices.create(**index_create_params)
@@ -26,7 +25,6 @@ class BaseElasticModel(object):
         assert self.doc_type is not None, error_message.format(variable_name="doc_type")
         assert self.db_config_name is not None, error_message.format(variable_name="db_config_name")
         assert self.adapter_class is not None, error_message.format(variable_name="adapter_class")
-        assert self.index_body is not None, error_message.format(variable_name="index_body")
 
         self.adapter = self.adapter_class(self.db_config_name)
         self.write_sessions = self.adapter.get_write_sessions()
