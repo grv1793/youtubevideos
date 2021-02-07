@@ -14,9 +14,12 @@ class Command(BaseCommand):
     MAX_API_CALL_LIMIT = 2
 
     def handle(self, *args, **kwargs):
+        print("On Sleep for 30 seconds")
+        time.sleep(30)
         while True:
             if self.COUNT > self.MAX_API_CALL_LIMIT:
                 print("MAX_API_CALL_LIMIT Reached: {}".format(self.COUNT))
+                self.COUNT += 1
                 time.sleep(self.FETCH_VIDEOS_FREQUENCY_IN_SECS)
                 continue
 
