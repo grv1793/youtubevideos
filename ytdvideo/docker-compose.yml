@@ -93,8 +93,6 @@ services:
     build: .
     restart: always
     command: bash -c "python3 manage.py savelatestvideosyoutubecommand"
-    env_file:
-      - ./.env
     networks:
       - default
     environment:
