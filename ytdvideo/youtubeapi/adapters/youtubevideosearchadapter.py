@@ -5,7 +5,7 @@ from googleapiclient.discovery import build
 
 class YoutubeVideoSearchAdapter(object):
     DEVELOPER_KEYS = [
-        'AIzaSyChmKqhkmr2SqOAC6nQZbKZWW-D1O1d8pE',
+        'AIzaSyDKSWSvYWOA16JmDl8USyuHP1oLcVvLWkQ',
     ]
     YOUTUBE_API_SERVICE_NAME = 'youtube'
     YOUTUBE_API_VERSION = 'v3'
