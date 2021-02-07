@@ -1,19 +1,20 @@
-import random
+import googleapiclient
 import traceback
+
+from rest_framework import exceptions
 from googleapiclient.discovery import build
+from youtubeapi.cachehandlers.youtubeapikeycachehandler import YouTubeAPIKeyCacheHandler
 
 
 class YoutubeVideoSearchAdapter(object):
-    DEVELOPER_KEYS = [
-        'AIzaSyDKSWSvYWOA16JmDl8USyuHP1oLcVvLWkQ',
-    ]
     YOUTUBE_API_SERVICE_NAME = 'youtube'
     YOUTUBE_API_VERSION = 'v3'
 
     def get_developer_api_key(self):
-        # TODO use new key only when previous key expires
-        # check response of api if key quota is reached and then fetch new api key
-        return random.choice(self.DEVELOPER_KEYS)
+        cache_handler = YouTubeAPIKeyCacheHandler()
+        api_key = cache_handler.get_configuration()
+        if not api_key:
+            raise exceptions.NotFound("Active API Key Not Found")
 
     def youtube_search(self, search_term, max_results=100):
         try:
@@ -46,9 +47,18 @@ class YoutubeVideoSearchAdapter(object):
                 )
 
             return videos
-        except:
+        except googleapiclient.errors.HttpError:
             print(traceback.format_exc())
+            self.invalidate_api_key_cache()
             return []
+        except exceptions.NotFound:
+            print("Active API Key Not Found")
+            return []
+
+    def invalidate_api_key_cache(self):
+        cache_handler = YouTubeAPIKeyCacheHandler()
+        cache_handler.invalidate_cache()
+        cache_handler.get_configuration()
 
     def format_thumbnails_data(self, data={}):
         formatted_data = []

@@ -1,3 +1,13 @@
 from django.contrib import admin
+from youtubeapi.models import YoutubeVideoAPIKey
 
-# Register your models here.
+
+class YoutubeVideoAPIKeyAdmin(admin.ModelAdmin):
+    list_display = [f.name for f in YoutubeVideoAPIKey._meta.fields]
+    list_per_page = 50
+    fields = list_display
+    date_hierarchy = 'modified'
+    readonly_fields = ['id', 'created', 'modified']
+
+
+admin.site.register(YoutubeVideoAPIKey, YoutubeVideoAPIKeyAdmin)
