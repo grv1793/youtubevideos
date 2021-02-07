@@ -51,12 +51,12 @@ class YoutubeVideoSearchAdapter(object):
                 )
 
             return videos
-        except googleapiclient.errors.HttpError:
-            print(traceback.format_exc())
-            self.invalidate_api_key_cache(api_key)
-            return []
         except exceptions.NotFound:
             print("Active API Key Not Found")
+            return []
+        except:
+            print(traceback.format_exc())
+            self.invalidate_api_key_cache(api_key)
             return []
 
     def invalidate_api_key_cache(self, api_key):
