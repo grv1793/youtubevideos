@@ -11,7 +11,7 @@ class Command(BaseCommand):
     """
     COUNT = 0
     FETCH_VIDEOS_FREQUENCY_IN_SECS = 10
-    MAX_API_CALL_LIMIT = 2
+    MAX_API_CALL_LIMIT = 30
 
     def handle(self, *args, **kwargs):
         print("On Sleep for 30 seconds")
