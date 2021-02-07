@@ -1,0 +1,91 @@
+version: '2.0'
+services:
+
+  redis:
+    image: 'redis:3.0.6'
+    environment:
+      - REDIS_DISABLE_COMMANDS=FLUSHDB,FLUSHALL
+    ports:
+      - '6379:6379'
+    volumes:
+      - 'redis_data:/var/lib/redis/data'
+    restart: always
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "17000m"
+        max-file: "5"
+    networks:
+      - default
+
+  postgres:
+    image: postgres:11
+    restart: always
+    ports:
+      - '5432:5432'
+    environment:
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=postgres
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "17000m"
+        max-file: "5"
+    networks:
+      - default
+
+  elasticsearch:
+    image: docker.elastic.co/elasticsearch/elasticsearch:7.6.0
+    restart: always
+    ports:
+      - '9200:9200'
+      - '9300:9300'
+    volumes:
+      - 'elasticsearch_data:/var/lib/elasticsearch/data'
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "17000m"
+        max-file: "5"
+    environment:
+      - discovery.type=single-node
+    networks:
+      - default
+
+  kibana:
+    image: 'kibana:7.6.0'
+    restart: always
+    ports:
+      - '5601:5601'
+    environment:
+      - KIBANA_ELASTICSEARCH_URL=elasticsearch
+    volumes:
+      - 'kibana_data:/var/lib/kibana/data'
+    depends_on:
+      - elasticsearch
+
+  save_latest_video_content_command:
+    build: .
+    restart: always
+    command: bash -c "python3 manage.py savelatestvideosyoutubecommand"
+    env_file:
+      - ./.env
+    networks:
+      - default
+    depends_on:
+      - kibana
+      - redis
+      - postgres
+      - elasticsearch
+
+volumes:
+  redis_data:
+    driver: local
+  kibana_data:
+    driver: local
+  elasticsearch_data:
+    driver: local
+
+#networks:
+#  ytdvideo:
+#    name: custom_network
