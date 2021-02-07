@@ -37,14 +37,23 @@ class YoutubeVideoSearchAdapter(object):
         videos = []
 
         for search_result in search_response.get('items', []):
+            thumbnails_data = self.format_thumbnails_data(search_result['snippet']['thumbnails'])
             videos.append(
                 {
                     "title": search_result['snippet']['title'],
                     "description": search_result['snippet']['publishedAt'],
                     "id": search_result['id']['videoId'],
                     "published_at": search_result['snippet']['publishedAt'],
-                    "thumbnails": search_result['snippet']['thumbnails'],
+                    "thumbnails": thumbnails_data,
                 }
             )
 
         return videos
+
+    def format_thumbnails_data(self, data={}):
+        formatted_data = []
+        for type, thumbnail_data in data.items():
+            thumbnail_data["type"] = type
+            formatted_data.append(thumbnail_data)
+
+        return formatted_data
