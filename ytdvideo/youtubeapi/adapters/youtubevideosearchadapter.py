@@ -4,6 +4,7 @@ import traceback
 from rest_framework import exceptions
 from googleapiclient.discovery import build
 from youtubeapi.cachehandlers.youtubeapikeycachehandler import YouTubeAPIKeyCacheHandler
+from youtubeapi.models import YoutubeVideoAPIKey
 
 
 class YoutubeVideoSearchAdapter(object):
@@ -17,11 +18,13 @@ class YoutubeVideoSearchAdapter(object):
             raise exceptions.NotFound("Active API Key Not Found")
 
     def youtube_search(self, search_term, max_results=100):
+        api_key = None
         try:
+            api_key = self.get_developer_api_key()
             youtube = build(
                 self.YOUTUBE_API_SERVICE_NAME,
                 self.YOUTUBE_API_VERSION,
-                developerKey=self.get_developer_api_key()
+                developerKey=api_key
             )
 
             search_response = youtube.search().list(
@@ -49,13 +52,19 @@ class YoutubeVideoSearchAdapter(object):
             return videos
         except googleapiclient.errors.HttpError:
             print(traceback.format_exc())
-            self.invalidate_api_key_cache()
+            self.invalidate_api_key_cache(api_key)
             return []
         except exceptions.NotFound:
             print("Active API Key Not Found")
             return []
 
-    def invalidate_api_key_cache(self):
+    def invalidate_api_key_cache(self, api_key):
+        if api_key:
+            YoutubeVideoAPIKey.objects.filter(
+                key=api_key
+            ).update(
+                status=YoutubeVideoAPIKey.STATUS_CHOICES._identifier_map.get(YoutubeVideoAPIKey.INACTIVE)
+            )
         cache_handler = YouTubeAPIKeyCacheHandler()
         cache_handler.invalidate_cache()
         cache_handler.get_configuration()
