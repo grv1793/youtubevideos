@@ -1,5 +1,7 @@
+import traceback
 from youtubeapi.adapters.youtubevideosearchadapter import YoutubeVideoSearchAdapter
 from youtubeapi.configs.searchqueryterm import YTD_SEARCH_QUERY_TERMS
+from api.serializers.videoserializer import VideoSerializer
 
 
 class SaveLatestVideosHelper(object):
@@ -14,5 +16,10 @@ class SaveLatestVideosHelper(object):
         return search_adapter.youtube_search(query_term)
 
     def save_videos_result(self, videos_result):
-        # TODO
-        pass
+        for result in videos_result:
+            try:
+                ser = VideoSerializer(data=result)
+                ser.is_valid(raise_exception=True)
+                ser.save()
+            except:
+                print(traceback.format_exc())

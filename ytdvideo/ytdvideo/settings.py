@@ -83,11 +83,52 @@ WSGI_APPLICATION = 'ytdvideo.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
+        'ENGINE': 'django.db.backends.postgresql_psycopg2',
+        'NAME': os.environ.get('DB_NAME', 'youtubevideos'),
+        'USER': os.environ.get('DB_USER', 'postgres'),
+        'PASSWORD': os.environ.get('DB_PASSWORD', 'postgres'),
+        'HOST': os.environ.get('DB_HOST', '127.0.0.1'),
+        'PORT': os.environ.get('DB_PORT', 5432),
     }
 }
 
+# should be true in prod and staging
+SHOULD_AUTHENTICATE_MONGODB = False
+
+NOSQL_DATABASES = {
+    "elastic_search_cluster": {
+        "write_clusters": [
+            {
+                "seeds": [{
+                    "host": os.environ.get('ELASTICSEARCH_HOST', '127.0.0.1'),
+                    "port": os.environ.get('ELASTICSEARCH_PORT', 9200)
+                }]
+            },
+        ],
+        "read_clusters": [
+            {
+                "seeds": [{
+                    "host": os.environ.get('ELASTICSEARCH_HOST', '127.0.0.1'),
+                    "port": os.environ.get('ELASTICSEARCH_PORT', 9200)
+                }]
+            },
+        ]
+    },
+}
+
+CACHES = {
+    'default': {
+        "BACKEND": "django_redis.cache.RedisCache",
+        "LOCATION": "redis://" + str(os.environ.get("REDIS_SERVER", "127.0.0.1")) + ":6379/" + str(
+            os.environ.get('STAG_VER', '0')),
+        "OPTIONS": {
+            "CLIENT_CLASS": "django_redis.client.DefaultClient",
+            "SOCKET_CONNECT_TIMEOUT": 5,  # in seconds
+            "SOCKET_TIMEOUT": 5,  # in seconds
+        },
+        "KEY_PREFIX": "VIKAS"
+    }
+}
 
 # Password validation
 # https://docs.djangoproject.com/en/2.2/ref/settings/#auth-password-validators
@@ -126,3 +167,6 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/2.2/howto/static-files/
 
 STATIC_URL = '/static/'
+STATIC_ROOT = 'temp/static'
+
+API_KEY = "testkey"

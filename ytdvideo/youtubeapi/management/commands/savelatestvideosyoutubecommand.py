@@ -12,7 +12,7 @@ class Command(BaseCommand):
     COUNT = 0
     FETCH_VIDEOS_FREQUENCY_IN_SECS = 10
 
-    def handle(self):
+    def handle(self, *args, **kwargs):
         while True:
             self.COUNT += 1
             self.save_latest_videos()
