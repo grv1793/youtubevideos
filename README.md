@@ -36,6 +36,13 @@ you will see dashboard for videos or go to http://127.0.0.1:3000/portal/api/vide
 ~~~
 
 ~~~
+you can configure the Youtube API keys here:
+http://127.0.0.1:3000/portal/youtubeapi/youtubevideoapikey/
+
+Adding/Deletion of api keys can be in runtime
+~~~
+
+~~~
 Postman Collection json file:
 
 check this file in repository:
