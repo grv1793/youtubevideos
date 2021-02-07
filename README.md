@@ -1,4 +1,7 @@
 # youtubevideos
+~~~
+Requirements: https://www.notion.so/Backend-Assignment-FamPay-32aa100dbd8a4479878f174ad8f9d990
+~~~
 
 ~~~
 Go to a dir in your system and run following commands:
@@ -40,23 +43,26 @@ you can configure the Youtube API keys here:
 http://127.0.0.1:3000/portal/youtubeapi/youtubevideoapikey/
 
 Adding/Deletion of api keys can be done in runtime
-some of the PI Keys that can be used are: 
+some of the API Keys that can be used are: 
 1. AIzaSyAv5hny1k5pP59AhnyePiANcAhAImOuiiU
 2. AIzaSyBDBKr6k0acy5RfoyAXhKf1gWikeZQOfUw
 3. AIzaSyDUzlTQ-ZkNxSrOTpWqhUfACANuJ8G77n8
 4. AIzaSyB-lY-psYHDqny-UhnlT4QyaP5HLMhEX3U
 
-You will see that API keys will be automatically set to InActive in portal
+Note: Videos data will be stored post addition of above API Keys in Django portal
+
+You will see that API keys will be automatically set to InActive in portal.
 ~~~
 
 ~~~
 Save youtube videos after every 10 seconds
 
+Once you have configured the API Keys in Portal
 you can see the logs using this command:
 -> docker-compose logs --tail="all" -f save_latest_video_content_command
 
 Implementation:
-1. added management command to execute this
+1. added django management command to execute this
 2. management command executed in docker container
 3. Check file youtubevideos/ytdvideo/youtubeapi/management/commands/savelatestvideosyoutubecommand.py
 4. Fetches videos data from youtube apis
