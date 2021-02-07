@@ -26,7 +26,7 @@ class YouTubeAPIKeyCacheHandler(BaseCacheHandler):
 
         if _cached_content:
             print('from cache')
-            self.data = _cached_content["api_key"]
+            self.api_key = _cached_content["api_key"]
         else:
             api_key = YoutubeVideoAPIKey.objects.filter(
                 status=YoutubeVideoAPIKey.STATUS_CHOICES._identifier_map.get(YoutubeVideoAPIKey.ACTIVE)
