@@ -1,6 +1,21 @@
 version: '2.0'
 services:
 
+  mysql:
+    image: 'mysql:5.6'
+    restart: always
+    ports:
+      - '3306:3306'
+    environment:
+      - MYSQL_ROOT_PASSWORD=root
+    volumes:
+      - 'mysql_data:/var/lib/fampay/mysql'
+    logging:
+      driver: json-file
+      options:
+        max-size: 17000m
+        max-file: '5'
+
   redis:
     image: 'redis:3.0.6'
     environment:
@@ -8,24 +23,8 @@ services:
     ports:
       - '6379:6379'
     volumes:
-      - 'redis_data:/var/lib/redis/data'
+      - 'redis_data:/var/lib/fampay/redis/data'
     restart: always
-    logging:
-      driver: "json-file"
-      options:
-        max-size: "17000m"
-        max-file: "5"
-    networks:
-      - default
-
-  postgres:
-    image: postgres:11
-    restart: always
-    ports:
-      - '5432:5432'
-    environment:
-      - POSTGRES_USER=postgres
-      - POSTGRES_PASSWORD=postgres
     logging:
       driver: "json-file"
       options:
@@ -41,7 +40,7 @@ services:
       - '9200:9200'
       - '9300:9300'
     volumes:
-      - 'elasticsearch_data:/var/lib/elasticsearch/data'
+      - 'elasticsearch_data:/var/lib/fampay/elasticsearch/data'
     logging:
       driver: "json-file"
       options:
@@ -60,7 +59,7 @@ services:
     environment:
       - KIBANA_ELASTICSEARCH_URL=elasticsearch
     volumes:
-      - 'kibana_data:/var/lib/kibana/data'
+      - 'kibana_data:/var/lib/fampay/kibana/data'
     depends_on:
       - elasticsearch
 
@@ -69,15 +68,13 @@ services:
     restart: always
     command: bash -c "python3 manage.py migrate && python3 manage.py runserver 0.0.0.0:3000"
     ports:
-      - '3000:3000'
-    expose:
-      - 3000
+      - '80:3000'
     environment:
-      - DB_NAME=postgres
-      - DB_USER=postgres
-      - DB_PASSWORD=postgres
-      - DB_HOST=postgres
-      - DB_PORT=5432
+      - DB_NAME=ytdvideos
+      - DB_USER=root
+      - DB_PASSWORD=root
+      - DB_HOST=mysql
+      - DB_PORT=3306
       - ELASTICSEARCH_HOST=elasticsearch
       - ELASTICSEARCH_PORT=9200
       - REDIS_SERVER=redis
@@ -86,7 +83,7 @@ services:
     depends_on:
       - kibana
       - redis
-      - postgres
+      - mysql
       - elasticsearch
 
   save_latest_video_content_command:
@@ -96,18 +93,18 @@ services:
     networks:
       - default
     environment:
-      - DB_NAME=postgres
-      - DB_USER=postgres
-      - DB_PASSWORD=postgres
-      - DB_HOST=postgres
-      - DB_PORT=5432
+      - DB_NAME=ytdvideos
+      - DB_USER=root
+      - DB_PASSWORD=root
+      - DB_HOST=mysql
+      - DB_PORT=3306
       - ELASTICSEARCH_HOST=elasticsearch
       - ELASTICSEARCH_PORT=9200
       - REDIS_SERVER=redis
     depends_on:
       - kibana
       - redis
-      - postgres
+      - mysql
       - elasticsearch
       - api
 
@@ -117,4 +114,6 @@ volumes:
   kibana_data:
     driver: local
   elasticsearch_data:
+    driver: local
+  mysql_data:
     driver: local

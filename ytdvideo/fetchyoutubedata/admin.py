@@ -1,5 +1,5 @@
 from django.contrib import admin
-from youtubeapi.models import YoutubeVideoAPIKey
+from fetchyoutubedata.models import YoutubeVideoAPIKey
 
 
 class YoutubeVideoAPIKeyAdmin(admin.ModelAdmin):

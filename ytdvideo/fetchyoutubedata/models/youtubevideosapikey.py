@@ -8,8 +8,8 @@ class YoutubeVideoAPIKey(TimeStampedModel):
     INACTIVE = "inactive"
 
     STATUS_CHOICES = Choices(
-        (0, ACTIVE, "Active"),
-        (1, INACTIVE, "InActive"),
+        (0, INACTIVE, "InActive"),
+        (1, ACTIVE, "Active"),
     )
 
     key = models.CharField(max_length=100, unique=True)

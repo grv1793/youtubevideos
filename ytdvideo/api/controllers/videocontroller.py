@@ -13,23 +13,20 @@ class VideoController(ListModelESMixin):
 
     def __init__(self, request):
         self.request = request
-        self.query_params = None
+        self.query_params = self.request.query_params
         self.hashed_query = None
         self.process_request()
 
         super(VideoController, self).__init__(self.query_params)
 
     def process_request(self):
-        encoded_query_params = self.request.query_params.get("data")
-        if encoded_query_params:
-            self.query_params, self.hashed_query = self.decode_base_64(encoded_query_params)
-            self.query_params = json.loads(self.query_params)
-            
+        if self.request.query_params.get("search_term"):
+            self.hashed_query = self.request.query_params.get("search_term").replace(" ", "_")
 
     def get_response_data(self, *args, **kwargs):
         data = self.get_data_from_cache()
         if not data:
-            data = self.get_data_from_es(*args, **kwargs)
+            data = self.list(*args, **kwargs)
             self.save_data_in_cache(data)
 
         _pagination_handler = ArrayPaginate(data, self.request)
@@ -46,30 +43,29 @@ class VideoController(ListModelESMixin):
         cache_handler = VideoSearchTermCacheHandler(self.hashed_query)
         return cache_handler.get_configuration()
 
-    def get_data_from_es(self, *args, **kwargs):
-        return super(VideoController, self).list(*args, **kwargs)
-
     def get_query(self):
         query = {"bool": {"should": []}}
 
         if self.query_params:
-            if self.query_params.get("title"):
+            if self.query_params.get("search_term"):
                 title_should_query = self.es_model_helper.get_widcard_and_fuzzy_query(
                     ["title"],
-                    self.query_params.get("title"),
+                    self.query_params.get("search_term"),
                 )
                 query = self.es_model_helper.form_query(title_should_query, query, query_type="should")
 
-            if self.query_params.get("description"):
                 description_should_query = self.es_model_helper.get_widcard_and_fuzzy_query(
                     ["description"],
-                    self.query_params.get("description"),
+                    self.query_params.get("search_term"),
                 )
                 query = self.es_model_helper.form_query(description_should_query, query, query_type="should")
 
         return {'query': query}
 
     def get_sort_params(self):
+        if self.query_params.get("search_term"):
+            return
+
         sort_params = {"published_at": {"order": "desc"}}
         return sort_params
 
@@ -86,20 +82,20 @@ class VideoController(ListModelESMixin):
             }
         )
 
-    @staticmethod
-    def decode_base_64(query_params):
-        """
-
-        :param query_params: base64encoded string having filter and search params
-        :return:
-        """
-        try:
-            base64_bytes = query_params.encode('ascii')
-            message_bytes = base64.b64decode(base64_bytes)
-            message = message_bytes.decode('ascii')
-
-            hasher = hashlib.sha256(query_params.encode())
-            hash_string = hasher.hexdigest()
-            return message, hash_string
-        except:
-            return None, None
+    # @staticmethod
+    # def decode_base_64(query_params):
+    #     """
+    #
+    #     :param query_params: base64encoded string having filter and search params
+    #     :return:
+    #     """
+    #     try:
+    #         base64_bytes = query_params.encode('ascii')
+    #         message_bytes = base64.b64decode(base64_bytes)
+    #         message = message_bytes.decode('ascii')
+    #
+    #         hasher = hashlib.sha256(query_params.encode())
+    #         hash_string = hasher.hexdigest()
+    #         return message, hash_string
+    #     except:
+    #         return None, None

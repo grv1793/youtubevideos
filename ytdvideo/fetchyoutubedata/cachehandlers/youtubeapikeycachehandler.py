@@ -1,5 +1,5 @@
 from common.adapters.redis import RedisCacheAdapter, BaseCacheHandler
-from youtubeapi.models import YoutubeVideoAPIKey
+from fetchyoutubedata.models import YoutubeVideoAPIKey
 
 
 class YouTubeAPIKeyCacheHandler(BaseCacheHandler):

@@ -4,7 +4,7 @@ from common.adapters.redis import RedisCacheAdapter, BaseCacheHandler
 class VideoSearchTermCacheHandler(BaseCacheHandler):
 
     BASE_KEY = "V2_VIDEO_SEARCH_TERM_{}"
-    TIMEOUT = 10  # 60 * 15 in seconds
+    TIMEOUT = 60 * 5  # 60 * 15 in seconds
     MACHINE_ALIAS = "default"
 
     def __init__(self, hashed_query):

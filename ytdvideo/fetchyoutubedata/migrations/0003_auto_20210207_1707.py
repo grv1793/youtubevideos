@@ -6,7 +6,7 @@ from django.db import migrations, models
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('youtubeapi', '0002_auto_20210207_1707'),
+        ('fetchyoutubedata', '0002_auto_20210207_1707'),
     ]
 
     operations = [

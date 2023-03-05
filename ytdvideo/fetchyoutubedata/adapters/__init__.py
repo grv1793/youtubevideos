@@ -1,0 +1,1 @@
+from fetchyoutubedata.adapters.youtubevideosearchadapter import YoutubeVideoSearchAdapter

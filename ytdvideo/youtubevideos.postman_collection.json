@@ -1,133 +1,97 @@
 {
-	"id": "3251d40a-c7b5-dfd9-6d80-915f54f7c710",
-	"name": "youtubevideos",
-	"description": "",
-	"order": [
-		"a12b75ac-a550-3914-cd90-e5ff777ccdff",
-		"f877a1e6-4988-f98d-a6ae-230d2e89f850"
-	],
-	"folders": [],
-	"folders_order": [],
-	"timestamp": 1612715219401,
-	"owner": "9333552",
-	"public": false,
-	"requests": [
+	"info": {
+		"_postman_id": "4012423b-1d57-4d77-bb36-94d19a125bb3",
+		"name": "youtubevideos",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "5974442"
+	},
+	"item": [
 		{
-			"id": "a12b75ac-a550-3914-cd90-e5ff777ccdff",
-			"headers": "x-api-key: testkey\n",
-			"headerData": [
-				{
-					"key": "x-api-key",
-					"value": "testkey",
-					"description": "",
-					"enabled": true
-				}
-			],
-			"url": "http://127.0.0.1:3000/api/videos/?limit=10&offset=0",
-			"queryParams": [
-				{
-					"key": "title",
-					"value": "car dodge",
-					"equals": true,
-					"description": "",
-					"enabled": false
-				},
-				{
-					"key": "description",
-					"value": "facebook",
-					"equals": true,
-					"description": "",
-					"enabled": false
-				},
-				{
-					"key": "data",
-					"value": "eyJ0aXRsZSI6ICJBeW9kaHlhIExlYWRlciIsICJkZXNjcmlwdGlvbiI6ICJkb2RnZSJ9",
-					"equals": true,
-					"description": "",
-					"enabled": false
-				},
-				{
-					"key": "limit",
-					"value": "10",
-					"equals": true,
-					"description": "",
-					"enabled": true
-				},
-				{
-					"key": "offset",
-					"value": "0",
-					"equals": true,
-					"description": "",
-					"enabled": true
-				}
-			],
-			"pathVariables": {},
-			"pathVariableData": [],
-			"preRequestScript": null,
-			"method": "GET",
-			"collectionId": "3251d40a-c7b5-dfd9-6d80-915f54f7c710",
-			"data": null,
-			"dataMode": "params",
 			"name": "Get Stored Videos",
-			"description": "",
-			"descriptionFormat": "html",
-			"time": 1612715280472,
-			"version": 2,
-			"responses": [],
-			"tests": null,
-			"currentHelper": "normal",
-			"helperAttributes": {}
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "x-api-key",
+						"value": "testkey"
+					}
+				],
+				"url": {
+					"raw": "http://127.0.0.1:80/api/videos/?limit=10&offset=0",
+					"protocol": "http",
+					"host": [
+						"127",
+						"0",
+						"0",
+						"1"
+					],
+					"port": "80",
+					"path": [
+						"api",
+						"videos",
+						""
+					],
+					"query": [
+						{
+							"key": "limit",
+							"value": "10"
+						},
+						{
+							"key": "offset",
+							"value": "0"
+						}
+					]
+				}
+			},
+			"response": []
 		},
 		{
-			"id": "f877a1e6-4988-f98d-a6ae-230d2e89f850",
-			"headers": "x-api-key: testkey\n",
-			"headerData": [
-				{
-					"key": "x-api-key",
-					"value": "testkey",
-					"description": "",
-					"enabled": true
-				}
-			],
-			"url": "http://127.0.0.1:3000/api/videos/?data=eyJ0aXRsZSI6ICJBeW9kaHlhIExlYWRlciIsICJkZXNjcmlwdGlvbiI6ICJkb2RnZSJ9&limit=10&offset=0",
-			"queryParams": [
-				{
-					"key": "data",
-					"value": "eyJ0aXRsZSI6ICJBeW9kaHlhIExlYWRlciIsICJkZXNjcmlwdGlvbiI6ICJkb2RnZSJ9",
-					"equals": true,
-					"description": "",
-					"enabled": true
-				},
-				{
-					"key": "limit",
-					"value": "10",
-					"equals": true,
-					"description": "",
-					"enabled": true
-				},
-				{
-					"key": "offset",
-					"value": "0",
-					"equals": true,
-					"description": "",
-					"enabled": true
-				}
-			],
-			"preRequestScript": null,
-			"pathVariables": {},
-			"pathVariableData": [],
-			"method": "GET",
-			"data": null,
-			"dataMode": "params",
-			"version": 2,
-			"tests": null,
-			"currentHelper": "normal",
-			"helperAttributes": {},
-			"time": 1612715407268,
 			"name": "Get Stored Videos using title and description filter",
-			"description": "",
-			"collectionId": "3251d40a-c7b5-dfd9-6d80-915f54f7c710",
-			"responses": []
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "x-api-key",
+						"value": "testkey"
+					}
+				],
+				"url": {
+					"raw": "http://127.0.0.1:80/api/videos/?limit=10&offset=0&search_term=channel liv",
+					"protocol": "http",
+					"host": [
+						"127",
+						"0",
+						"0",
+						"1"
+					],
+					"port": "80",
+					"path": [
+						"api",
+						"videos",
+						""
+					],
+					"query": [
+						{
+							"key": "limit",
+							"value": "10"
+						},
+						{
+							"key": "offset",
+							"value": "0"
+						},
+						{
+							"key": "search_term",
+							"value": "channel liv"
+						},
+						{
+							"key": "",
+							"value": "",
+							"disabled": true
+						}
+					]
+				}
+			},
+			"response": []
 		}
 	]
 }

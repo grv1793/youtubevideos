@@ -33,7 +33,7 @@ ALLOWED_HOSTS = []
 PROJECT_APPS = [
     "api",
     "common",
-    "youtubeapi"
+    "fetchyoutubedata"
 ]
 
 EXTERNAL_APPS = [
@@ -83,12 +83,12 @@ WSGI_APPLICATION = 'ytdvideo.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.postgresql_psycopg2',
-        'NAME': os.environ.get('DB_NAME', 'postgres'),
-        'USER': os.environ.get('DB_USER', 'postgres'),
-        'PASSWORD': os.environ.get('DB_PASSWORD', 'postgres'),
+        'ENGINE': 'django.db.backends.mysql',
+        'NAME': os.environ.get('DB_NAME', 'ytdvideos'),
+        'USER': os.environ.get('DB_USER', 'root'),
+        'PASSWORD': os.environ.get('DB_PASSWORD', 'root'),
         'HOST': os.environ.get('DB_HOST', '127.0.0.1'),
-        'PORT': os.environ.get('DB_PORT', 5432),
+        'PORT': os.environ.get('DB_PORT', 3306),
     },
 }
 
