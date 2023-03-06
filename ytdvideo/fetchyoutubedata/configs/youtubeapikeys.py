@@ -1,11 +1,7 @@
 YTD_API_KEYS = [
-    "AIzaSyB05HpHXBG4-2pCfs7wAzwo9Imjw35LtJA",
-    "AIzaSyA4oItpIzuIy3oALIfSorYhtzrpHNXZY_0",
-    "AIzaSyCNUdRlym9fhtpDbXoVX2j1bKpUB-71iVI",
-    "AIzaSyBN4I_evVB4NQc31kQWkPjs6I61vABZY8A",
-    "AIzaSyBt3BhG0frebTKikuwP5eevrMAoz0D1Z2s",
-    "AIzaSyDcEFTIy3UppMLNRxZl05Z7YxzywOWseFI",
-    "AIzaSyBsdIWnW0WTPCe2cf_s75K4Ve_KPn3Mfa4",
-    "AIzaSyCO2fe6YY1EX7I3wWz-VXRObk-eENhEGho",
-    "AIzaSyC3mRTQcg-AsB46TQoN82rsdaERhA0Emz8",
+    "AIzaSyAUss8j4myDhB8jU4g5u2Fdy0gMlX-0zTM",
+    "AIzaSyC-ilgfroDZtY1KOXO0-Q0bl8P0iOWrbk8",
+    "AIzaSyBgcJ2JnkpRz_aXTiQpRpBmKJBHB3rzryw",
+    "AIzaSyAQgnSmLULbFlvhVh5auePORJ5IkXD9mA8",
+    "AIzaSyC6OaXal0JYtjgQz41nnMRA0bX0nqXfo5U",
 ]
